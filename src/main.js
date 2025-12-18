@@ -364,9 +364,6 @@ function explodeBox() {
   setTimeout(() => {
     uiResult.classList.remove("hidden-vis");
     uiResult.classList.add("visible-vis");
-
-    const randomNum = Math.floor(Math.random() * 9000) + 1000;
-    // document.getElementById("coupon-code").innerText = `XXXX`;
   }, 200);
 }
 
@@ -473,7 +470,7 @@ function onMouseClick(event) {
 function checkIntersection() {
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children);
-  // selectedBox.userData.isSelected = true;
+ 
 
   const hit = intersects.find(
     (i) => i.object.geometry.type === "IcosahedronGeometry"
