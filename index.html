@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>animationproject</title>
+    <link rel="stylesheet" href="/src/style.css" />
+
+
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer" class="">
+      <!-- Form -->
+
+      <div id="stage-form" class=" ">
+        <div class="bonanzaImage">
+          <img width="100%" src="/bonanza.png" alt="bonanza_image" />
+        </div>
+
+        <div class="thanksContainer">
+          <p class="">Thanks for choosing DEEPAL!</p>
+          <p class="">Open your blind box to reveal your surprise!</p>
+        </div>
+
+        <form id="details-form" class="formContainer">
+          <div class="formFieldContainer">
+            <label name="name">NAME</label>
+            <div>
+              <input type="text" required class="" />
+            </div>
+          </div>
+
+          <div class="formFieldContainer">
+            <label name="name">SALES AGREEMENT NUMBER </label>
+            <div>
+              <input type="text" required class="" />
+            </div>
+          </div>
+
+          <div class="">
+            <button type="submit" class="revealButton">
+              <p class="">Reveal Now</p>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!--  Pick -->
+      <div id="stage-pick" class="hidden-vis pickDeeple">
+        <p class="">PICK A</p>
+        <h2 class="">DEEPAL BOX</h2>
+      </div>
+
+      <!--  Result -->
+      <div id="stage-result" class="hidden-vis">
+        <h2 class="">CONGRATULATIONS!</h2>
+
+        <h3 id="coupon-code" class="">XXXX</h3>
+
+        <p>ENJOY NEXT GENERATION <br>
+       ELECTRIC MOBILITY WITH <br>
+       AWARD-WINNING DEEPAL</p>
+
+        <button onclick="location.reload()" class="submitBotton">
+          Play Again
+        </button>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
