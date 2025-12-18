@@ -353,18 +353,21 @@ function handleBoxClick(intersectedMesh) {
 }
 
 function explodeBox() {
+  secondConfetti();
+
   selectedBox.visible = false;
 
-  triggerConfetti();
+  setTimeout(() => {
+    setTimeout(() => {
+      triggerConfetti();
+    }, 500);
+    uiResult.classList.remove("hidden-vis");
+    uiResult.classList.add("visible-vis");
+  }, 200);
 
   setInterval(() => {
     secondConfetti();
   }, 2000);
-
-  setTimeout(() => {
-    uiResult.classList.remove("hidden-vis");
-    uiResult.classList.add("visible-vis");
-  }, 200);
 }
 
 function triggerConfetti() {
@@ -470,7 +473,6 @@ function onMouseClick(event) {
 function checkIntersection() {
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children);
- 
 
   const hit = intersects.find(
     (i) => i.object.geometry.type === "IcosahedronGeometry"
