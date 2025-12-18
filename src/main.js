@@ -106,8 +106,8 @@ function createBackgroundMeshes() {
     addLogo(1, 0, 2.2);
     addLogo(-1.5, 1.4, 1.4);
     addLogo(2.2, 1, 0);
-    addLogo(0.2, 1.5, 1.2);
-    addLogo(1.8, -1.3, -1.32);
+    addLogo(1.7, -1.3, -1.32);
+    addLogo(-1.7, 1.5, -1.2);
     scene.add(mesh);
     boxes.push({ mesh, type: "bg", speed });
 
@@ -115,12 +115,16 @@ function createBackgroundMeshes() {
   }
 
   createFloatingMesh("#4C6EF5", { x: -15, y: -6, z: -5 });
-  // createFloatingMesh("#2EC4B6", { x: 17, y: -7, z: -8 });
+
   // createFloatingMesh("#9B5DE5", { x: 14, y: 7, z: -8 });
   createFloatingMesh("#A8E063", { x: -17, y: 7, z: -8 });
-  createFloatingMesh("#FF8FA3", { x:11, y: 7, z: -8 });
+  createFloatingMesh("#FF8FA3", { x: 11, y: 7, z: -8 });
   createFloatingMesh("#FFD166", { x: 10, y: -5, z: -6 });
-  // createFloatingMesh("#8E8AFF", { x: -10, y: 0, z: -5 });
+  if (window.innerWidth < 800) {
+    createFloatingMesh("#8E8AFF", { x: -1, y: -4, z: -5 });
+    createFloatingMesh("#2EC4B6", { x: 0, y: 5, z: -8 });
+  }
+
   // createFloatingMesh("#76E4F7", { x: 10, y: 0, z: -5 });
 }
 
@@ -166,14 +170,16 @@ function createGameBoxes() {
 
       mesh.add(logoMesh);
     }
-    addLogo(0.5, 0, 1.3);
-    addLogo(-0.4, -0.2, 1.34);
-    addLogo(0.85, -0.8, 0.8);
-    addLogo(1, 0.68, 0.7);
-    addLogo(-0.4, -0, -1.37);
-    addLogo(-0.24, -1.4, -0.37);
-    addLogo(0.8, 1, 0.37);
-    addLogo(-1, 0.5, -0.95);
+    // addLogo(0.5, 0, 1.3);
+    // addLogo(-0.4, -0.2, 1.34);
+    // addLogo(0.85, -0.8, 0.8);
+    // addLogo(1, 0.68, 0.7);
+    // addLogo(-0.4, -0, -1.37);
+    // addLogo(-0.44, -1.36, -0.37);
+    // addLogo(-1.27, 0.6, 0.33);
+    addLogo(-0.99, 0.62, -0.8);
+    addLogo(0.78, -0.8, 0.8);
+    addLogo(-0.61, -0.8, 1);
 
     const xPos = (i - 2) * 5;
 
@@ -448,6 +454,8 @@ function onWindowResize() {
 
 function animate() {
   renderer.render(scene, camera);
+  onWindowResize();
+
   time += 0.01;
 
   const t = performance.now() * 0.001;
