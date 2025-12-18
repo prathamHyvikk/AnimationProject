@@ -88,26 +88,50 @@ function createBackgroundMeshes() {
       rangeZ: 3 + Math.random() * 2,
     };
 
-    function addLogo(x, y, z) {
-      const logoGeo = new THREE.PlaneGeometry(1, 1);
+    function addLogoToFace(faceIndex) {
+      const logoGeo = new THREE.PlaneGeometry(0.8, 0.8);
       const logoMat = new THREE.MeshBasicMaterial({
         map: logoTexture,
         transparent: true,
         side: THREE.DoubleSide,
+        polygonOffset: true,
+        polygonOffsetFactor: -1,
       });
-
       const logoMesh = new THREE.Mesh(logoGeo, logoMat);
-      logoMesh.position.set(x, y, z);
-      logoMesh.lookAt(0, 0, 0);
 
+      const posAttribute = mesh.geometry.getAttribute("position");
+      const localNormal = new THREE.Vector3();
+
+      const vA = new THREE.Vector3().fromBufferAttribute(
+        posAttribute,
+        faceIndex * 3
+      );
+      const vB = new THREE.Vector3().fromBufferAttribute(
+        posAttribute,
+        faceIndex * 3 + 1
+      );
+      const vC = new THREE.Vector3().fromBufferAttribute(
+        posAttribute,
+        faceIndex * 3 + 2
+      );
+      const center = new THREE.Vector3()
+        .add(vA)
+        .add(vB)
+        .add(vC)
+        .divideScalar(3);
+
+      logoMesh.position.copy(center);
+
+      const normal = center.clone().normalize();
+      const targetPosition = center.clone().add(normal);
+      logoMesh.lookAt(targetPosition);
       mesh.add(logoMesh);
     }
 
-    addLogo(1, 0, 2.2);
-    addLogo(-1.5, 1.4, 1.4);
-    addLogo(2.2, 1, 0);
-    addLogo(1.7, -1.3, -1.32);
-    addLogo(-1.7, 1.5, -1.2);
+    addLogoToFace(0);
+    addLogoToFace(10);
+
+    addLogoToFace(18);
     scene.add(mesh);
     boxes.push({ mesh, type: "bg", speed });
 
@@ -156,30 +180,51 @@ function createGameBoxes() {
 
     const mesh = new THREE.Mesh(geometry, material);
 
-    function addLogo(x, y, z) {
+    function addLogoToFace(faceIndex) {
       const logoGeo = new THREE.PlaneGeometry(0.5, 0.5);
       const logoMat = new THREE.MeshBasicMaterial({
         map: logoTexture,
         transparent: true,
         side: THREE.DoubleSide,
+        polygonOffset: true, // Prevents "Z-fighting" (flickering)
+        polygonOffsetFactor: -1,
       });
-
       const logoMesh = new THREE.Mesh(logoGeo, logoMat);
-      logoMesh.position.set(x, y, z);
-      logoMesh.lookAt(mesh.position.clone().multiplyScalar(2));
-
+      // 1. Get the center position of a specific triangular face
+      const posAttribute = mesh.geometry.getAttribute("position");
+      const localNormal = new THREE.Vector3();
+      // Calculate the face normal and center
+      const vA = new THREE.Vector3().fromBufferAttribute(
+        posAttribute,
+        faceIndex * 3
+      );
+      const vB = new THREE.Vector3().fromBufferAttribute(
+        posAttribute,
+        faceIndex * 3 + 1
+      );
+      const vC = new THREE.Vector3().fromBufferAttribute(
+        posAttribute,
+        faceIndex * 3 + 2
+      );
+      const center = new THREE.Vector3()
+        .add(vA)
+        .add(vB)
+        .add(vC)
+        .divideScalar(3);
+      // 2. Position the logo at the face center
+      logoMesh.position.copy(center);
+      // 3. Make the logo look away from the center of the icosahedron
+      // For a centered icosahedron, the normal is just the normalized center point
+      const normal = center.clone().normalize();
+      const targetPosition = center.clone().add(normal);
+      logoMesh.lookAt(targetPosition);
       mesh.add(logoMesh);
     }
-    // addLogo(0.5, 0, 1.3);
-    // addLogo(-0.4, -0.2, 1.34);
-    // addLogo(0.85, -0.8, 0.8);
-    // addLogo(1, 0.68, 0.7);
-    // addLogo(-0.4, -0, -1.37);
-    // addLogo(-0.44, -1.36, -0.37);
-    // addLogo(-1.27, 0.6, 0.33);
-    addLogo(-0.99, 0.62, -0.8);
-    addLogo(0.78, -0.8, 0.8);
-    addLogo(-0.61, -0.8, 1);
+
+    addLogoToFace(0);
+    addLogoToFace(10);
+
+    addLogoToFace(18);
 
     const xPos = (i - 2) * 5;
 
