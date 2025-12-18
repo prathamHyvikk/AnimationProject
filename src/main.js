@@ -411,6 +411,7 @@ function secondConfetti() {
   var count = 200;
   var defaults = {
     origin: { y: 0.7 },
+    scalar: 2,
   };
 
   function fire(particleRatio, opts) {
