@@ -328,7 +328,7 @@ function handleBoxClick(intersectedMesh) {
       x: "+=0.2",
       y: "+=0.2",
       yoyo: true,
-      repeat: 30,
+      repeat: 8,
       duration: 0.05,
     })
     .to(
@@ -337,7 +337,7 @@ function handleBoxClick(intersectedMesh) {
         x: 1.4,
         y: 1.4,
         z: 1.4,
-        duration: 0.5,
+        duration: 0.07,
         ease: "power1.in",
       },
       "<"
@@ -345,16 +345,8 @@ function handleBoxClick(intersectedMesh) {
     .to(
       selectedBox.material,
       {
-        emissiveIntensity: 1,
-        duration: 0.5,
-      },
-      "<"
-    )
-    .to(
-      selectedBox.material,
-      {
         emissiveIntensity: 2,
-        duration: 1,
+        duration: 0.03,
       },
       "<"
     );
@@ -365,31 +357,9 @@ function explodeBox() {
 
   triggerConfetti();
 
-  // function addMesh(position) {
-  //   const geometry = new THREE.IcosahedronGeometry(1.3, 0);
-  //   const material = new THREE.MeshStandardMaterial({
-  //     color: "#2776f2",
-  //   });
-
-  //   const mesh = new THREE.Mesh(geometry, material);
-  //   mesh.type = "bg";
-
-  //   mesh.position.set(position.x, position.y, position.z);
-  //   scene.add(mesh);
-
-  //   gsap.to(mesh.rotation, {
-  //     x: Math.PI * 2,
-  //     y: Math.PI * 2,
-  //     duration: 3,
-  //     repeat: -1,
-  //     ease: "none",
-  //   });
-  // }
-
-  // addMesh({ x: -11, y: 4, z: 1 });
-  // addMesh({ x: -8, y: -5, z: 0 });
-  // addMesh({ x: 12, y: 4, z: 1.5 });
-  // addMesh({ x: 8, y: -3, z: 0 });
+  setInterval(() => {
+    secondConfetti();
+  }, 2000);
 
   setTimeout(() => {
     uiResult.classList.remove("hidden-vis");
@@ -435,6 +405,44 @@ function triggerConfetti() {
       origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
     });
   }, 250);
+}
+
+function secondConfetti() {
+  var count = 200;
+  var defaults = {
+    origin: { y: 0.7 },
+  };
+
+  function fire(particleRatio, opts) {
+    confetti({
+      ...defaults,
+      ...opts,
+      particleCount: Math.floor(count * particleRatio),
+    });
+  }
+
+  fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
+  });
+  fire(0.2, {
+    spread: 60,
+  });
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8,
+  });
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2,
+  });
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+  });
 }
 
 function onMouseMove(event) {
