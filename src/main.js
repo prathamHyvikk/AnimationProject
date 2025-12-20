@@ -60,6 +60,7 @@ function init() {
 
   formEl.addEventListener("submit", (e) => {
     e.preventDefault();
+
     transitionToPickPhase();
   });
 }
@@ -256,6 +257,10 @@ async function fetchVoucher() {
     const data = await response.json();
     console.log(data.voucher);
     document.getElementById("coupon-code").innerText = data.voucher;
+    const formName = document.getElementById("name").value;
+    const formAgreementNumber =
+      document.getElementById("Agreement-Number").value;
+    console.log(formName, formAgreementNumber);
   } catch (error) {
     console.error(error);
   }
@@ -365,9 +370,13 @@ function explodeBox() {
     uiResult.classList.add("visible-vis");
   }, 200);
 
-  setInterval(() => {
+  const interval = setInterval(() => {
     secondConfetti();
   }, 2000);
+
+  setTimeout(() => {
+    clearInterval(interval);
+  }, 60000);
 }
 
 function triggerConfetti() {
