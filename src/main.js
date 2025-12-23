@@ -57,6 +57,7 @@ function init() {
   window.addEventListener("resize", onWindowResize);
   window.addEventListener("mousemove", onMouseMove);
   window.addEventListener("click", onMouseClick);
+  window.addEventListener("pointerdown", onMouseClick, { passive: true });
 
   formEl.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -467,22 +468,24 @@ function onMouseMove(event) {
 function onMouseClick(event) {
   if (gameState !== "PICK") return;
 
-  if (gameState === "PICK" && isHovering) {
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(scene.children);
-    const box = intersects.find(
-      (hit) => hit.object.geometry.type === "IcosahedronGeometry"
-    );
-    if (box) {
-      handleBoxClick(box.object);
-    }
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  const intersects = raycaster.intersectObjects(scene.children, true);
+  const box = intersects.find(
+    (hit) => hit.object.geometry?.type === "IcosahedronGeometry"
+  );
+
+  if (box) {
+    handleBoxClick(box.object);
   }
 }
 
 function checkIntersection() {
   raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(scene.children);
-
+  const intersects = raycaster.intersectObjects(scene.children, true);
   const hit = intersects.find(
     (i) => i.object.geometry.type === "IcosahedronGeometry"
   );
