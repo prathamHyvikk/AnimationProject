@@ -4,9 +4,11 @@ import { gsap } from "gsap";
 
 const config = {
   colors: [0xffa500, 0x4169e1, 0xff6347, 0x32cd32, 0x00ced1],
-  boxCount: 50,
+  boxCount: 10,
   spread: 4,
 };
+const PICK_BOX_COUNT = 10;
+
 let scene, camera, renderer, raycaster, mouse;
 let boxes = [];
 let particles = [];
@@ -155,7 +157,7 @@ function createBackgroundMeshes() {
   // createFloatingMesh("#76E4F7", { x: 10, y: 0, z: -5 });
 }
 
-function createGameBoxes() {
+function createGameBoxes(count = config.boxCount) {
   boxes.forEach((item) => {
     gsap.to(item.mesh.scale, {
       x: 0,
@@ -169,10 +171,10 @@ function createGameBoxes() {
   });
   boxes = [];
 
-  const geometry = new THREE.IcosahedronGeometry(1.7, 0);
+  const geometry = new THREE.IcosahedronGeometry(2, 0);
   const logoTexture = new THREE.TextureLoader().load("/logo.svg");
 
-  for (let i = 0; i < config.boxCount; i++) {
+  for (let i = 0; i < count; i++) {
     const color = config.colors[i % config.colors.length];
     const material = new THREE.MeshStandardMaterial({
       color: color,
@@ -229,7 +231,9 @@ function createGameBoxes() {
 
     addLogoToFace(18);
 
-    const xPos = (i - 2) * 5;
+    const spacing = 3.5;
+    const xPos = (i - (count - 1) / 2) * spacing;
+    mesh.position.set(xPos, 0, 0);
 
     mesh.position.set(xPos, 0, 0);
 
@@ -286,7 +290,9 @@ function transitionToPickPhase() {
     uiPick.classList.remove("hidden-vis");
     uiPick.classList.add("visible-vis");
 
-    createGameBoxes();
+    // createGameBoxes();
+    createGameBoxes(10);
+    camera.position.z = 22;
   }, 500);
 }
 
