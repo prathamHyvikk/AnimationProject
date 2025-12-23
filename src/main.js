@@ -19,6 +19,7 @@ const uiForm = document.getElementById("stage-form");
 const uiPick = document.getElementById("stage-pick");
 const uiResult = document.getElementById("stage-result");
 const formEl = document.getElementById("details-form");
+const sorryPopup = document.getElementById("stage-sorry");
 
 function init() {
   scene = new THREE.Scene();
@@ -257,7 +258,12 @@ async function fetchVoucher() {
     const response = await fetch("../src/data.json");
     const data = await response.json();
     console.log(data.voucher);
-    document.getElementById("coupon-code").innerText = data.voucher;
+
+    if (data == 0) {
+      gameState = "Sorry";
+    } else {
+      document.getElementById("coupon-code").innerText = data.voucher;
+    }
     const formName = document.getElementById("name").value;
     const formAgreementNumber =
       document.getElementById("Agreement-Number").value;
@@ -359,25 +365,29 @@ function handleBoxClick(intersectedMesh) {
 }
 
 function explodeBox() {
-  secondConfetti();
-
   selectedBox.visible = false;
 
   setTimeout(() => {
-    setTimeout(() => {
-      triggerConfetti();
-    }, 500);
-    uiResult.classList.remove("hidden-vis");
-    uiResult.classList.add("visible-vis");
+    if (gameState == "Sorry") {
+      sorryPopup.classList.remove("hidden-vis");
+      sorryPopup.classList.add("visible-vis");
+    } else {
+      secondConfetti();
+      setTimeout(() => {
+        triggerConfetti();
+      }, 500);
+      uiResult.classList.remove("hidden-vis");
+      uiResult.classList.add("visible-vis");
+
+      const interval = setInterval(() => {
+        secondConfetti();
+      }, 2000);
+
+      setTimeout(() => {
+        clearInterval(interval);
+      }, 60000);
+    }
   }, 200);
-
-  const interval = setInterval(() => {
-    secondConfetti();
-  }, 2000);
-
-  setTimeout(() => {
-    clearInterval(interval);
-  }, 60000);
 }
 
 function triggerConfetti() {

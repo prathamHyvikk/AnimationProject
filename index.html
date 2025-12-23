@@ -25,7 +25,7 @@
         <p class="">Open your blind box to reveal your surprise.</p>
       </div>
 
-      <form id="details-form" class="formContainer">
+      <form id="details-form" method="post" class="formContainer">
         <div class="formFieldContainer">
           <label name="name">NAME</label>
           <div>
@@ -68,6 +68,18 @@
         Play Again
       </button>
     </div>
+
+    <!-- Already claimed -->
+    <div id="stage-sorry" class="sorryContainer hidden-vis">
+      <div class="sorryBox ">
+        <h2 class="title">Oops!</h2>
+        <p class="message">You have Already Claimed Your Voucher</p>
+        <button onclick="location.reload()" class="retryButton">Home</button>
+      </div>
+    </div>
+
+
+
   </div>
   <script type="module" src="/src/main.js"></script>
 </body>
