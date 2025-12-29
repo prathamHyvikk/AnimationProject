@@ -259,9 +259,24 @@ function createGameBoxes(count = config.boxCount) {
 
 async function fetchVoucher() {
   try {
-    const response = await fetch("../src/data.json");
+    // const response = await fetch("../src/data.json", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     name: document.getElementById("name").value,
+    //     agreementNumber: document.getElementById("Agreement-Number").value,
+    //   }),
+    // });
+    const params = new URLSearchParams({
+      name: document.getElementById("name").value,
+      agreement_no: document.getElementById("Agreement-Number").value,
+    });
+    const response = await fetch(`../src/data.json?${params.toString()}`);
     const data = await response.json();
-    console.log(data.voucher);
+    console.log(data);
+    // console.log(data.voucher);
 
     if (data == 0) {
       gameState = "Sorry";
