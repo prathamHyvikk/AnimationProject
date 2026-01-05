@@ -226,7 +226,7 @@ input {
 }
 
 #stage-result h3 {
-  font-size: 120px;
+  font-size: 80px;
   font-weight: 900;
 }
 
@@ -260,12 +260,12 @@ input {
     width: 500px;
   }
   #stage-result h2 {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 700;
   }
 
   #stage-result h3 {
-    font-size: 120px;
+    font-size: 65px;
     font-weight: 900;
   }
 
@@ -305,7 +305,7 @@ input {
   }
 
   #stage-result h3 {
-    font-size: 80px;
+    font-size: 50px;
     font-weight: 900;
   }
 
@@ -375,3 +375,17 @@ input {
 .retryButton:hover {
   background-color: #093b8d;
 }
+
+
+
+#confetti{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .hideConfetti{
+    display: none;
+  }
