@@ -8,6 +8,8 @@ const config = {
   spread: 4,
 };
 const PICK_BOX_COUNT = 15;
+let pickSpeedMultiplier = 1;
+
 
 let scene, camera, renderer, raycaster, mouse;
 let boxes = [];
@@ -297,6 +299,7 @@ async function fetchVoucher() {
 
 function transitionToPickPhase() {
   gameState = "PICK";
+   pickSpeedMultiplier = 2;
 
   uiForm.classList.add("fade-out");
 
@@ -589,20 +592,21 @@ function animate() {
       const m = box.mesh;
       const b = m.userData.basePosition;
       const off = box.floatOffset;
+      const speed = pickSpeedMultiplier;
 
       m.position.x =
-        b.x + Math.sin(time * 0.8 + off * 0.2) * 4 + Math.sin(time * 0.1) * 0.2;
+        b.x + Math.sin(time * 0.8 * speed + off * 0.2) * 4 + Math.sin(time * 0.1) * 2;
 
       m.position.y =
-        b.y + Math.cos(time * 0.5 + off * 0.3) * 4 + Math.sin(time * 0.15) * 2;
+        b.y + Math.cos(time * 0.5 * speed + off * 0.3) * 4 + Math.sin(time * 0.15) * 2;
 
-      m.position.z = b.z + Math.sin(time * 0.22 + off * 0.2) * 6;
+      m.position.z = b.z + Math.sin(time * 0.22 * speed + off * 0.2) * 6;
 
       const rotMultiplier = m.userData.isSelected ? 0.03 : 0.3;
 
-      m.rotation.x += box.rotSpeed.x * rotMultiplier * 12;
-      m.rotation.y += box.rotSpeed.y * rotMultiplier * 12;
-      m.rotation.z += box.rotSpeed.z * rotMultiplier * 12;
+      m.rotation.x += box.rotSpeed.x * rotMultiplier;
+      m.rotation.y += box.rotSpeed.y * rotMultiplier;
+      m.rotation.z += box.rotSpeed.z * rotMultiplier;
     }
   });
 
