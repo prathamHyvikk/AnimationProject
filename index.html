@@ -16,7 +16,7 @@
     <a class='iprodev' href='http://iprodev.com' target='_blank'>iprodev.com</a>
 
   </canvas>
-  
+
 
   <div id="ui-layer" class="">
     <!-- Form -->
@@ -52,12 +52,18 @@
           </button>
         </div>
       </form>
+
+      <audio id="game-sound" autoplay loop  preload="auto">
+        <source  src="/public/gameSound.mp3" type="audio/mpeg">
+      </audio>
+      <!-- <audio loop src="/public/gameSound.mp3" preload="auto"></audio> -->
     </div>
 
     <!--  Pick -->
     <div id="stage-pick" class="hidden-vis pickDeeple">
       <p class="">PICK A</p>
       <h2 class="">DEEPAL BOX</h2>
+
     </div>
 
     <!--  Result -->
@@ -73,6 +79,8 @@
       <button onclick="location.reload()" class="submitBotton">
         Play Again
       </button>
+
+      <audio id="winner-sound" src="/public/cheer.mp3" preload="auto"></audio>
     </div>
 
     <!-- Already claimed -->
